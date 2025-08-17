@@ -1,0 +1,87 @@
+.book-section {
+  background-color: #d6f0f3;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.book-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1100px;
+  flex-wrap: wrap;
+}
+
+.card{
+  background-color: #C6D6F9;
+  height:200px ;
+  width: 320px;
+}
+.card-box {
+  background:#fff;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+}
+
+.icon {
+  color: #2563eb;
+  font-size: 1.5rem;
+}
+
+.card p {
+  color: #555;
+  margin: 0.5rem 0 1rem;
+}
+
+.explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #2563eb;
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.explore-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.middle-arrow {
+  font-size: 2rem;
+  color: #fbbf24;
+  display: none;
+}
+
+.image-box {
+  flex: 1;
+}
+
+.main-image {
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+@media (min-width: 768px) {
+  .middle-arrow {
+    display: block;
+  }
+}

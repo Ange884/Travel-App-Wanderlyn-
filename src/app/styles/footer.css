@@ -1,0 +1,22 @@
+.footer {
+  background-color: #9FB9CC;
+  color: #333;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.footer-icons img {
+  border-radius: 8px;
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  color: #333;
+}

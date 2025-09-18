@@ -1,23 +1,50 @@
 'use client';
 import '../styles/signup.css';
-import { signIn } from 'next-auth/react';
- import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 export default function SignupPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const [formData, setFormData] = useState({
+    name: '',
+    email:'',
+    password:''
+  });
 
-const router = useRouter();
- const [formData, setFormData] =useState({
-   name: '',
-   email:'',
-   password:''
-   });
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
 
 
-  const handleSignup = (e) => {
-    e.preventDefault(); 
-    router.push('/dashboard');
+  const handleSignup = async (e) => {
+  e.preventDefault();
+  
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("token", data.token);
+      router.push("/dashboard"); 
+    } else {
+      alert(data.msg || "Signup failed");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Network error. Please try again.");
   }
+}
+
 
    return (
     <div className="signup-page">
@@ -62,7 +89,7 @@ const router = useRouter();
   <span> or</span>
              </div>
 
-         <div className="google-button" onClick={() => signIn("google")}>
+         <div className="google-button" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
   <img src="/images/google.png" alt="Google icon" />
   <span>Sign up With Google</span>
 </div>

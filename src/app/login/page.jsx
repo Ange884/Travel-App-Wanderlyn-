@@ -1,25 +1,46 @@
 'use client';
 import '../styles/login.css';
-import {signIn} from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function LoginPage() {
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = (e) => {
-    e.preventDefault()
-
-   
-    if (email && password) {
-       localStorage.setItem("isLoggedIn", "true");
-      router.push('/dashboard') 
-    } else {
-      alert('Please enter your email and password')
+  
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
     }
-  }
+  }, [status, router]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("token", data.token);
+        router.push("/dashboard");
+      } else {
+        alert(data.msg || "Login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error. Please try again.");
+    }
+  };
+
 
 
   return (
@@ -71,7 +92,7 @@ export default function LoginPage() {
                   <span> or</span>
              </div>
 
-         <div className="google-button" onClick={() => signIn("google")}>
+         <div className="google-button" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
                    <img src="/images/google.png" alt="Google icon" />
                    <span>Login With Google</span>
                  </div>

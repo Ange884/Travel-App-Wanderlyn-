@@ -1,0 +1,13 @@
+Create a file named .env.local in the my-travel-app folder with the following content:
+
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret_here_make_it_long_and_secure
+GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+
+Instructions:
+1. Copy this content to a new file named .env.local in the my-travel-app folder
+2. Replace the NEXTAUTH_SECRET with a secure random string
+3. Use the same Google OAuth credentials from your backend .env file
+4. Make sure the backend is running on port 5000
